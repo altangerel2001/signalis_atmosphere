@@ -5,8 +5,8 @@ const ctx = canvas.getContext('2d');
 const windowImg = new Image();
 windowImg.src = 'sprites/window.png';
 
-const towerImg = new Image();
-towerImg.src = 'sprites/tower.png';
+// const towerImg = new Image();
+// towerImg.src = 'sprites/tower.png';
 
 // Snow particles
 const snow = [];
@@ -40,7 +40,7 @@ function animate(){
   drawSnow();
 
   // 3️⃣ Draw tower (farthest background)
-  ctx.drawImage(towerImg, 220,50,200,380);
+//   ctx.drawImage(towerImg, 220,50,200,380);
 
   // Flickering light (optional)
   ctx.fillStyle = `rgba(255,240,200,${0.05 + Math.random()*0.1})`;
