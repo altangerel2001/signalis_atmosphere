@@ -2,10 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>School Flashback Scene - Snow</title>
+  <title>Canvas with Image Size</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+    }
+  </style>
 </head>
 <body>
-  <canvas id="scene" width="1920" height="1080"></canvas>
-  <script src="scene.js"></script>
+  <canvas id="scene"></canvas>
+  <script>
+    const canvas = document.getElementById('scene');
+    const ctx = canvas.getContext('2d');
+
+    // Зургаа ачаалж, canvas-ийн хэмжээг тохируулах
+    const img = new Image();
+    img.src = 'your-image.png'; // энд зурагныхаа замыг оруулна
+
+    img.onload = function() {
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Зураг canvas-д зурна
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+    };
+  </script>
 </body>
 </html>
