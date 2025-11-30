@@ -3,46 +3,64 @@ const ctx = canvas.getContext('2d');
 
 // Load images
 const windowImg = new Image();
-windowImg.src = 'sprites/window.png';
+windowImg.src = 'sprites/window.png'; // Transparent window layer
 
-// const towerImg = new Image();
-// towerImg.src = 'sprites/tower.png';
+const towerImg = new Image();
+towerImg.src = 'sprites/tower.png'; // Pixel-art tower
 
-// Snow particles
-const snow = [];
-for(let i=0;i<150;i++){
-  snow.push({
+// Snow layers
+const snowFront = [];
+const snowBack = [];
+
+// Front layer - bigger, faster snow
+for(let i=0;i<100;i++){
+  snowFront.push({
     x: Math.random()*canvas.width,
     y: Math.random()*canvas.height,
-    size: 1 + Math.random()*3,
-    speed: 0.5 + Math.random()*1.2
+    size: 3 + Math.random()*5,
+    speed: 1 + Math.random()*1.5
   });
 }
 
-function drawSnow(){
-  ctx.fillStyle = 'white';
-  snow.forEach(s => {
+// Back layer - smaller, slower snow
+for(let i=0;i<80;i++){
+  snowBack.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    size: 2 + Math.random()*3,
+    speed: 0.3 + Math.random()*0.8
+  });
+}
+
+// Draw snow function
+function drawSnow(layer){
+  layer.forEach(s => {
+    ctx.fillStyle = `rgba(255,255,255,${0.4 + Math.random()*0.6})`;
     ctx.fillRect(s.x, s.y, s.size, s.size);
     s.y += s.speed;
-    if(s.y>canvas.height) s.y = 0;
+    if(s.y > canvas.height) s.y = 0;
   });
 }
 
+// Main animation loop
 function animate(){
-  // Clear background
+  // 1️⃣ Background night sky
   ctx.fillStyle = '#000014';
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  // 1️⃣ Draw window first (foreground layer)
+  // 2️⃣ Snow back layer
+  drawSnow(snowBack);
+
+  // 3️⃣ Tower
+  ctx.drawImage(towerImg, 220,50,200,380);
+
+  // 4️⃣ Snow front layer
+  drawSnow(snowFront);
+
+  // 5️⃣ Window overlay
   ctx.drawImage(windowImg, 0,0,canvas.width,canvas.height);
 
-  // 2️⃣ Draw snow (behind window if window PNG has transparency)
-  drawSnow();
-
-  // 3️⃣ Draw tower (farthest background)
-//   ctx.drawImage(towerImg, 220,50,200,380);
-
-  // Flickering light (optional)
+  // 6️⃣ Flickering interior light
   ctx.fillStyle = `rgba(255,240,200,${0.05 + Math.random()*0.1})`;
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
