@@ -48,15 +48,14 @@ function animate(){
   ctx.fillStyle = '#000014';
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  // 2️⃣ Window layer first (transparent background, харагдах хэсэг нь шилэн мэт)
+  // 2️⃣ Snow back layer (удаан, жижиг)
+  drawSnow(snowBack);
+
+  // 3️⃣ Snow front layer (том, хурдан)
+  drawSnow(snowFront);
+
+  // 4️⃣ Window overlay (transparent) – цасны ард харагдана
   ctx.drawImage(windowImg, 0,0,canvas.width,canvas.height);
-
-  // 3️⃣ Snow behind window
-  drawSnow(snowFront); // front snow (том snow, хурдан) 
-  drawSnow(snowBack);  // back snow (удаан, жижиг)
-
-  // 4️⃣ (Tower-г дараа нь нэмнэ)
-  // ctx.drawImage(towerImg, 220,50,200,380);
 
   // 5️⃣ Flickering light
   ctx.fillStyle = `rgba(255,240,200,${0.05 + Math.random()*0.1})`;
@@ -64,5 +63,6 @@ function animate(){
 
   requestAnimationFrame(animate);
 }
+
 
 
