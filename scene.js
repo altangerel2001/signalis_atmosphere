@@ -5,15 +5,13 @@ const ctx = canvas.getContext('2d');
 canvas.width = 2380;
 canvas.height = 1180;
 
+const snowflakes = [];
+const snowCount = 200;
+
 // Layer 1: window.png
 const windowImg = new Image();
 windowImg.src = 'sprites/window.png';
 
-// Layer 2: Snow
-const snowflakes = [];
-const snowCount = 200;
-
-// Snowflake үүсгэх
 for (let i = 0; i < snowCount; i++) {
   snowflakes.push({
     x: Math.random() * canvas.width,
@@ -28,10 +26,6 @@ function drawScene() {
   ctx.fillStyle = '#3a4a5e'; // цэнхэр-саарал өнгө
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Layer 1: window.png
-  ctx.drawImage(windowImg, 0, 0, canvas.width, canvas.height);
-
-  // Layer 2: Snow
   ctx.fillStyle = 'white';
   ctx.beginPath();
   for (const flake of snowflakes) {
@@ -39,6 +33,9 @@ function drawScene() {
     ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
   }
   ctx.fill();
+
+  ctx.drawImage(windowImg, 0, 0, canvas.width, canvas.height);
+
 
   // Snowflake update
   for (const flake of snowflakes) {
@@ -49,7 +46,6 @@ function drawScene() {
   requestAnimationFrame(drawScene);
 }
 
-// Zураг load хийгдсэний дараа animation эхэлнэ
 windowImg.onload = () => {
   drawScene();
 };
