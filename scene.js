@@ -7,6 +7,11 @@ canvas.height = 1180;
 const snowflakes = [];
 const snowCount = 500;
 
+// Layer 0: Background зураг
+const towerImg = new Image();
+towerImg.src = 'sprites/tower.png';
+
+// Layer 1: window.png
 const windowImg = new Image();
 windowImg.src = 'sprites/window.png';
 
@@ -16,15 +21,14 @@ for (let i = 0; i < snowCount; i++) {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     radius: Math.random() * 2 + 1,
-    speedY: Math.random() * 1 + 2, // доош урсах хурд
-    speedX: Math.random() * 1 + 0.5 // зүүнээс баруун урсах хурд
+    speedY: Math.random() * 1 + 2,
+    speedX: Math.random() * 1 + 0.5
   });
 }
 
 function drawScene() {
-  // Layer 0: Background
-  ctx.fillStyle = '#0b2747ff';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // Layer 0: tower.png as background
+  ctx.drawImage(towerImg, 0, 0, canvas.width, canvas.height);
 
   // Layer 2: Snow
   ctx.fillStyle = 'white';
@@ -35,15 +39,14 @@ function drawScene() {
   }
   ctx.fill();
 
-  // Layer 1: window.png
+  // Layer 1: window.png (дээд layer)
   ctx.drawImage(windowImg, 0, 0, canvas.width, canvas.height);
 
-  // Snowflake update (wind effect)
+  // Snowflake update
   for (const flake of snowflakes) {
     flake.y += flake.speedY;
-    flake.x += flake.speedX; // зүүнээс баруун тийш урсгал
+    flake.x += flake.speedX;
 
-    // Canvas-аа давсан тохиолдолд эргүүлэх
     if (flake.y > canvas.height) flake.y = 0;
     if (flake.x > canvas.width) flake.x = 0;
   }
@@ -51,6 +54,9 @@ function drawScene() {
   requestAnimationFrame(drawScene);
 }
 
-windowImg.onload = () => {
-  drawScene();
+// Зураг load хийгдсэнээр animation эхэлнэ
+towerImg.onload = () => {
+  windowImg.onload = () => {
+    drawScene();
+  }
 };
