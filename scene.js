@@ -1,50 +1,52 @@
 const canvas = document.getElementById('scene');
 const ctx = canvas.getContext('2d');
 
-// Load tower and window pixel art
+// Images
 const tower = new Image();
-tower.src = 'sprites/tower.png'; // pixel art tower
+tower.src = 'sprites/tower.png';
 
 const windowFrame = new Image();
-windowFrame.src = 'sprites/window.png'; // transparent window frame
+windowFrame.src = 'sprites/window.png';
 
-// Snow particles (parallax layers)
-const snowFront = [];
-const snowBack = [];
-for(let i=0;i<80;i++){
-  snowFront.push({x:Math.random()*640, y:Math.random()*480, size:1+Math.random()*2, speed:1+Math.random()*1.5});
-}
-for(let i=0;i<50;i++){
-  snowBack.push({x:Math.random()*640, y:Math.random()*480, size:1+Math.random()*2, speed:0.3+Math.random()*0.8});
+// Snow particles
+const snow = [];
+for(let i=0;i<150;i++){
+  snow.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    size: 1 + Math.random()*3,
+    speed: 0.5 + Math.random()*1.2
+  });
 }
 
-function drawSnow(layer){
+function drawSnow(){
   ctx.fillStyle = 'white';
-  layer.forEach(s => {
+  snow.forEach(s => {
     ctx.fillRect(s.x, s.y, s.size, s.size);
     s.y += s.speed;
-    if(s.y>canvas.height) s.y = 0;
+    if(s.y > canvas.height) s.y = 0;
   });
 }
 
 function animate(){
-  // 1️⃣ Background night sky
+  // Background (night sky)
   ctx.fillStyle = '#000014';
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  // 2️⃣ Tower in distance
-  ctx.drawImage(tower, 220,50,200,380);
+  // Tower in distance
+  ctx.drawImage(tower, 200, 50, 240, 400);
 
-  // 3️⃣ Snow layers (behind window)
-  drawSnow(snowBack);
-  drawSnow(snowFront);
+  // Snow
+  drawSnow();
 
-  // 4️⃣ Window overlay (foreground)
-  ctx.drawImage(windowFrame, 0,0,canvas.width,canvas.height);
+  // Window overlay
+  ctx.drawImage(windowFrame, 0, 0, canvas.width, canvas.height);
 
-  // 5️⃣ Flickering interior light (inside room)
+  // Optional flickering light
   ctx.fillStyle = `rgba(255,240,200,${0.05 + Math.random()*0.1})`;
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   requestAnimationFrame(animate);
 }
+
+animate();
