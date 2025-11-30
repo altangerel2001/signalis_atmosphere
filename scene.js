@@ -27,27 +27,24 @@ function drawSnow(layer){
   });
 }
 
-// Main animate loop
 function animate(){
-  // Background night sky
+  // 1️⃣ Background night sky
   ctx.fillStyle = '#000014';
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  // Tower in distance
+  // 2️⃣ Tower in distance
   ctx.drawImage(tower, 220,50,200,380);
 
-  // Snow layers
+  // 3️⃣ Snow layers (behind window)
   drawSnow(snowBack);
   drawSnow(snowFront);
 
-  // Window overlay (foreground)
+  // 4️⃣ Window overlay (foreground)
   ctx.drawImage(windowFrame, 0,0,canvas.width,canvas.height);
 
-  // Flickering interior light
+  // 5️⃣ Flickering interior light (inside room)
   ctx.fillStyle = `rgba(255,240,200,${0.05 + Math.random()*0.1})`;
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   requestAnimationFrame(animate);
 }
-
-animate();
