@@ -1,14 +1,12 @@
 const canvas = document.getElementById('scene');
 const ctx = canvas.getContext('2d');
 
-// Canvas-ийн хэмжээ зурагтай адил
 canvas.width = 2380;
 canvas.height = 1180;
 
 const snowflakes = [];
-const snowCount = 200;
+const snowCount = 500;
 
-// Layer 1: window.png
 const windowImg = new Image();
 windowImg.src = 'sprites/window.png';
 
@@ -17,13 +15,12 @@ for (let i = 0; i < snowCount; i++) {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     radius: Math.random() * 2 + 1,
-    speed: Math.random() * 1 + 0.5
+    speed: Math.random() * 1 + 2
   });
 }
 
 function drawScene() {
-  // Layer 0: Background (шөнө шиг цэнхэр-саарал)
-  ctx.fillStyle = '#3a4a5e'; // цэнхэр-саарал өнгө
+  ctx.fillStyle = '#0b2747ff'; 
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   ctx.fillStyle = 'white';
