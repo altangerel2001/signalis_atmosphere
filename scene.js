@@ -48,22 +48,21 @@ function animate(){
   ctx.fillStyle = '#000014';
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  // 2️⃣ Snow back layer (алсын snow)
-  drawSnow(snowBack);
-
-  // 3️⃣ Tower (background)
-  ctx.drawImage(towerImg, 220,50,200,380);
-
-  // 4️⃣ Snow front layer (foreground snow)
-  drawSnow(snowFront);
-
-  // 5️⃣ Window overlay (foreground layer, шилэн хэсэг нь transparent)
+  // 2️⃣ Window layer first (transparent background, харагдах хэсэг нь шилэн мэт)
   ctx.drawImage(windowImg, 0,0,canvas.width,canvas.height);
 
-  // 6️⃣ Flickering indoor light
+  // 3️⃣ Snow behind window
+  drawSnow(snowFront); // front snow (том snow, хурдан) 
+  drawSnow(snowBack);  // back snow (удаан, жижиг)
+
+  // 4️⃣ (Tower-г дараа нь нэмнэ)
+  // ctx.drawImage(towerImg, 220,50,200,380);
+
+  // 5️⃣ Flickering light
   ctx.fillStyle = `rgba(255,240,200,${0.05 + Math.random()*0.1})`;
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   requestAnimationFrame(animate);
 }
+
 
